@@ -297,27 +297,27 @@ const weeklyWeatherData = {
 }
 
 type Location = {
-    latitude: number
-    longitude: number
+    latitude: number;
+    longitude: number;
 }
 
 export const getDailyTemperatureData = async (location: Location) => {
-    return dummyDailyTemperature
+    // return dummyDailyTemperature
     // TODO
-    // const req = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${location.latitude}&longitude=${location.longitude}&current=temperature_2m,wind_speed_10m&hourly=temperature_2m&forecast_days=1`)
-    // return await req.json()
+    const req = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${location.latitude}&longitude=${location.longitude}&current=temperature_2m,wind_speed_10m&hourly=temperature_2m&forecast_days=1`)
+    return await req.json()
 }
 
 export const getHourlyWeatherData = async (location: Location) => {
-    return hourlyWeather
+    // return hourlyWeather
     // TODO
-    // const req = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${location.latitude}&longitude=${location.longitude}&hourly=temperature_2m,relative_humidity_2m`)
-    // return await req.json()
+    const req = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${location.latitude}&longitude=${location.longitude}&hourly=temperature_2m,relative_humidity_2m`)
+    return await req.json()
 }
 
 export const getWeeklyWeatherData = async (location: Location) => {
-    return weeklyWeatherData
+    // return weeklyWeatherData
     // TODO
-    // const req = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${location.latitude}&longitude=${location.longitude}&daily=temperature_2m_max,temperature_2m_min&forecast_days=7`)
-    // return await req.json()
+    const req = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${location.latitude}&longitude=${location.longitude}&daily=temperature_2m_max,temperature_2m_min&forecast_days=7`)
+    return await req.json()
 }

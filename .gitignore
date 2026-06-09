@@ -42,3 +42,6 @@ next-env.d.ts
 
 # vscode conf
 .vscode
+
+*storybook.log
+storybook-static

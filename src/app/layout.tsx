@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import Navigation from '@/components/Navigation'
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,7 +28,20 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col items-center">
+        <div className="min-w-5xl max-w-7xl w-full">
+          <div className="mb-8 mt-4">
+            <h1 className="text-5xl font-bold text-slate-800">
+              Daily Weather
+            </h1>
+            <span className="text-slate-500 mt-2">
+              Created with Open-Meteo
+            </span>
+          </div>
+          <Navigation />
+          {children}
+        </div>
+      </body>
     </html>
   );
 }
