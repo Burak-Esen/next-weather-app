@@ -27,7 +27,7 @@ type Props = {
 }
 
 export default function BarChart({ data, labels, titles }: Props) {
-  const chartData: ChartData = {
+  const chartData: ChartData<'bar'> = {
     labels,
     datasets: []
   };

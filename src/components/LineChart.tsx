@@ -6,7 +6,8 @@ import {
   LineElement,
   Tooltip,
   Legend,
-  ChartData
+  ChartData,
+  ChartOptions
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 
@@ -29,7 +30,7 @@ type Props = {
 }
 
 export default function LineChart({ data, labels, titles }: Props) {
-  const chartData: ChartData = {
+  const chartData: ChartData<'line'> = {
     labels,
     datasets: []
   };
@@ -47,7 +48,7 @@ export default function LineChart({ data, labels, titles }: Props) {
     })
   })
   
-  const options = {
+  const options: ChartOptions<'line'> = {
     scales: {
       y: {
         min: Math.round(Math.min(...mins) -2),
