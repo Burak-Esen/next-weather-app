@@ -14,7 +14,7 @@ export const WeeklyWeatherValidation = z.object({
     temperature_2m_min: z.string(),
   }),
   daily: z.object({
-    time: z.array(z.iso.datetime({ local: true })),
+    time: z.array(z.iso.date()),
     temperature_2m_max: z.array(z.number()),
     temperature_2m_min: z.array(z.number()),
   }),
