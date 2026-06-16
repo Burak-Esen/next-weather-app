@@ -1,3 +1,7 @@
+import { DailyTemp, DailyTempValidation } from '@/validation/dailyTemp'
+import { HourlyWeather, HourlyWeatherValidation } from '@/validation/hourlyWeather'
+import { WeeklyWeather, WeeklyWeatherValidation } from '@/validation/weeklyWeather'
+
 // Dummy data for dev
 const dummyDailyTemperature = {
     "latitude": 53.211998,
@@ -79,7 +83,7 @@ const dummyDailyTemperature = {
     }
 }
 
-const hourlyWeather = {
+const dummyHourlyWeather = {
   "latitude": 51.574,
   "longitude": 4.785,
   "generationtime_ms": 0.187158584594727,
@@ -268,7 +272,7 @@ const hourlyWeather = {
   }
 }
 
-const weeklyWeatherData = {
+const dummyWeeklyWeatherData = {
   "latitude": 51.574,
   "longitude": 4.785,
   "generationtime_ms": 0.0461339950561523,
@@ -301,23 +305,65 @@ type Location = {
     longitude: number;
 }
 
-export const getDailyTemperatureData = async (location: Location) => {
-    // return dummyDailyTemperature
-    // TODO
-    const req = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${location.latitude}&longitude=${location.longitude}&current=temperature_2m,wind_speed_10m&hourly=temperature_2m&forecast_days=1`)
-    return await req.json()
-}
+// ! Dummy Data - todo
+// export const getDailyTemperatureData: (location: Location) => Promise<DailyTemp | null> = async (location: Location) => {
+//   const result = DailyTempValidation.safeParse(dummyDailyTemperature)
+//   if (!result.success) {
+//     console.error("openmeteo daily temperature validation error:")
+//     console.error(result.error);
+//     return null;
+//   }
+//   return result.data
+// }
+// export const getHourlyWeatherData: (location: Location) => Promise<HourlyWeather | null> = async (location: Location) => {
+//     const res = HourlyWeatherValidation.safeParse(dummyHourlyWeather)
+//     if (!res.success) {
+//       console.error("openmeteo hourly weather validation error:")
+//       console.error(res.error)
+//       return null
+//     }
+//     return res.data
+// }
+// export const getWeeklyWeatherData: (location: Location) => Promise<WeeklyWeather | null> = async (location: Location) => {
+//     const res = WeeklyWeatherValidation.safeParse(dummyWeeklyWeatherData)
+//     if (!res.success) {
+//       console.error("openmeteo hourly weather validation error:")
+//       console.error(res.error)
+//       return null
+//     }
+//     return res.data
+// }
 
-export const getHourlyWeatherData = async (location: Location) => {
-    // return hourlyWeather
-    // TODO
-    const req = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${location.latitude}&longitude=${location.longitude}&hourly=temperature_2m,relative_humidity_2m`)
-    return await req.json()
+export const getDailyTemperatureData: (location: Location) => Promise<DailyTemp | null> = async (location: Location) => {
+  const req = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${location.latitude}&longitude=${location.longitude}&current=temperature_2m,wind_speed_10m&hourly=temperature_2m&forecast_days=1`)
+  const data = await req.json()
+  const result = DailyTempValidation.safeParse(data)
+  if (!result.success) {
+    console.error("openmeteo daily temperature validation error:")
+    console.error(result.error);
+    return null;
+  }
+  return result.data
 }
-
-export const getWeeklyWeatherData = async (location: Location) => {
-    // return weeklyWeatherData
-    // TODO
+export const getHourlyWeatherData: (location: Location) => Promise<HourlyWeather | null> = async (location: Location) => {
+  const req = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${location.latitude}&longitude=${location.longitude}&hourly=temperature_2m,relative_humidity_2m`)
+  const data = await req.json()
+  const res = HourlyWeatherValidation.safeParse(data)
+    if (!res.success) {
+      console.error("openmeteo hourly weather validation error:")
+      console.error(res.error)
+      return null
+    }
+    return res.data
+}
+export const getWeeklyWeatherData: (location: Location) => Promise<WeeklyWeather | null> = async (location: Location) => {
     const req = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${location.latitude}&longitude=${location.longitude}&daily=temperature_2m_max,temperature_2m_min&forecast_days=7`)
-    return await req.json()
+    const data = await req.json()
+    const res = WeeklyWeatherValidation.safeParse(data)
+    if (!res.success) {
+      console.error("openmeteo hourly weather validation error:")
+      console.error(res.error)
+      return null
+    }
+    return res.data
 }
